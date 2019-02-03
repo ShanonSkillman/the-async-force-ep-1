@@ -38,29 +38,49 @@ oReq3.open("GET", "https://swapi.co/api/people/14/");
 oReq3.send();
 
 //GET PERSON SPECIES//
-function getSpecies() {
-  let species = JSON.parse(this.responseText);
-  //    console.log(species)
-  document.getElementById("person14Species").innerHTML = species["name"];
-  //    console.log(getSpecies);
-}
-var oreq4 = new XMLHttpRequest();
-oreq4.addEventListener("load", getSpecies);
-oreq4.open("GET", "https://swapi.co/api/species/1/");
-oreq4.send();
+
+const request = (url, callback) => {
+  const oReq4A = new XMLHttpRequest();
+  oReq4A.addEventListener("load", function(data) {
+    const resData = JSON.parse(data.target.responseText);
+    callback(resData);
+  });
+  oReq4A.open("GET", url);
+  oReq4A.send();
+};
+
+request("https://swapi.co/api/species/1/", function(data) {
+  console.log("data", data);
+  document.getElementById("person14Species").innerHTML = data["name"];
+});
+
+// function getSpecies() {
+//   let species = JSON.parse(this.responseText);
+//   //    console.log(species)
+//   document.getElementById("person14Species").innerHTML = species["name"];
+//   //    console.log(getSpecies);
+// }
+// var oReq4 = new XMLHttpRequest();
+// oReq4.addEventListener("load", getSpecies);
+// oReq4.open("GET", "https://swapi.co/api/species/1/");
+// oReq4.send();
 
 //GET LIST OF ALL FILMS//
 // const request = (url, callback) => {
-//     const oReq3A = new XMLHttpRequest();
-//     oReq3A.addEventListener("load", function (data) {
+//     const oReq5 = new XMLHttpRequest();
+//     oReq5.addEventListener("load", function (data) {
 //         const resData = JSON.parse(data.target.responseText);
 //         callback(resData);
 //     });
-//     oReq3A.open("GET", url);
-//     oReq3A.send();
+//     oReq5.open("GET", url);
+//     oReq5.send();
 // };
 
-// request("https://swapi.co/api/people/14/", function (data) {
-//     console.log("data", data);
-
+// request("https://swapi.co/api/films/", function(data) {
+//   console.log("data", data);
+//   data.films.forEach(function(url) {
+//     request(url, funciton(data) {
+//         // console.log('inner Data', data)
+//     });
+//   });
 // });
