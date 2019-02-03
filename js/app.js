@@ -26,31 +26,37 @@ oReq2.open("GET", "https://swapi.co/api/planets/1/");
 oReq2.send();
 
 //GET PERSON OBJECT NAME//
-function getName14() {
-  let name14 = JSON.parse(this.responseText);
-  //    console.log(name14);
-  //    console.log(getName14)
-  document.getElementById("person14Name").innerHTML = name14["name"];
-}
-var oReq3 = new XMLHttpRequest();
-oReq3.addEventListener("load", getName14);
-oReq3.open("GET", "https://swapi.co/api/people/14/");
-oReq3.send();
-
-//GET PERSON SPECIES//
 
 const request = (url, callback) => {
-  const oReq4A = new XMLHttpRequest();
-  oReq4A.addEventListener("load", function(data) {
+  const oReq3A = new XMLHttpRequest();
+  oReq3A.addEventListener("load", function(data) {
     const resData = JSON.parse(data.target.responseText);
     callback(resData);
   });
-  oReq4A.open("GET", url);
-  oReq4A.send();
+  oReq3A.open("GET", url);
+  oReq3A.send();
 };
 
+request("https://swapi.co/api/people/14/", function(data) {
+//   console.log("data", data);
+  document.getElementById("person14Name").innerHTML = data["name"];
+});
+
+// function getName14() {
+//   let name14 = JSON.parse(this.responseText);
+//   //    console.log(name14);
+//   //    console.log(getName14)
+//   document.getElementById("person14Name").innerHTML = name14["name"];
+// }
+// var oReq3 = new XMLHttpRequest();
+// oReq3.addEventListener("load", getName14);
+// oReq3.open("GET", "https://swapi.co/api/people/14/");
+// oReq3.send();
+
+//GET PERSON SPECIES//
+
 request("https://swapi.co/api/species/1/", function(data) {
-  console.log("data", data);
+//   console.log("data", data);
   document.getElementById("person14Species").innerHTML = data["name"];
 });
 
@@ -66,21 +72,32 @@ request("https://swapi.co/api/species/1/", function(data) {
 // oReq4.send();
 
 //GET LIST OF ALL FILMS//
-// const request = (url, callback) => {
-//     const oReq5 = new XMLHttpRequest();
-//     oReq5.addEventListener("load", function (data) {
-//         const resData = JSON.parse(data.target.responseText);
-//         callback(resData);
-//     });
-//     oReq5.open("GET", url);
-//     oReq5.send();
-// };
 
-// request("https://swapi.co/api/films/", function(data) {
+request("https://swapi.co/api/films/", function(data) {
 //   console.log("data", data);
-//   data.films.forEach(function(url) {
-//     request(url, funciton(data) {
-//         // console.log('inner Data', data)
-//     });
-//   });
+  const filmlist = document.getElementById("filmList");
+  //   filmlist.innerHTML = data.results[0].title;
+
+  data.results.forEach(function(film) {
+    // console.log(film.title);
+    filmTitleNode = document.createElement("li");
+    filmTitleNode.innerHTML = film.title;
+    // console.log("filmlist", filmlist);
+    // console.log("film", film);
+    filmlist.appendChild(filmTitleNode);
+    //   console.log(film);
+
+    film.planets.forEach(function(planet) {
+      // console.log(planet)
+      planetNode = document.createElement("li");
+      planetNode.innerHTML = planet.name;
+        filmTitleNode.appendChild(planetNode)
+ 
+    //   request("https://swapi.co/api/films/", function(data) {
+        // console.log("planet", planet);
+      });
+
+    
+    });
+  });
 // });
