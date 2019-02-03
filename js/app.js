@@ -38,7 +38,7 @@ const request = (url, callback) => {
 };
 
 request("https://swapi.co/api/people/14/", function(data) {
-//   console.log("data", data);
+  //   console.log("data", data);
   document.getElementById("person14Name").innerHTML = data["name"];
 });
 
@@ -56,7 +56,7 @@ request("https://swapi.co/api/people/14/", function(data) {
 //GET PERSON SPECIES//
 
 request("https://swapi.co/api/species/1/", function(data) {
-//   console.log("data", data);
+  //   console.log("data", data);
   document.getElementById("person14Species").innerHTML = data["name"];
 });
 
@@ -74,13 +74,13 @@ request("https://swapi.co/api/species/1/", function(data) {
 //GET LIST OF ALL FILMS//
 
 request("https://swapi.co/api/films/", function(data) {
-//   console.log("data", data);
+  //   console.log("data", data);
   const filmlist = document.getElementById("filmList");
   //   filmlist.innerHTML = data.results[0].title;
 
   data.results.forEach(function(film) {
     // console.log(film.title);
-    filmTitleNode = document.createElement("li");
+    let filmTitleNode = document.createElement("li");
     filmTitleNode.innerHTML = film.title;
     // console.log("filmlist", filmlist);
     // console.log("film", film);
@@ -88,16 +88,14 @@ request("https://swapi.co/api/films/", function(data) {
     //   console.log(film);
 
     film.planets.forEach(function(planet) {
-      // console.log(planet)
-      planetNode = document.createElement("li");
-      planetNode.innerHTML = planet.name;
-        filmTitleNode.appendChild(planetNode)
- 
-    //   request("https://swapi.co/api/films/", function(data) {
-        // console.log("planet", planet);
+      request(planet, function(data) {
+        let planetNode = document.createElement("ul");
+        // console.log(data);
+        planetNode.innerHTML = data.name;
+        filmTitleNode.appendChild(planetNode);
       });
-
-    
+      //   console.log("planet", planet);
     });
   });
+});
 // });
